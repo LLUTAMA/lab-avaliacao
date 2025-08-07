@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAB Avaliação - Bloco 3</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #059669;
+            --accent: #8b5cf6;
+            --warning: #d97706;
+            --danger: #dc2626;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f4f8, #e2e8f0);
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 1.5rem 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        /* Barra de tiempo del Bloque */
+        .block-time-header {
+            background: #dbeafe;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .block-title-main {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary-dark);
+        }
+
+        .time-display {
+            background: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            color: var(--primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .time-bar-container {
+            height: 10px;
+            background: #e0f2fe;
+            border-radius: 10px;
+            margin: 0 2rem 1rem;
+            overflow: hidden;
+        }
+
+        .time-bar {
+            height: 100%;
+            width: 0%; /* Se llenará con JS */
+            background: linear-gradient(90deg, var(--success), var(--primary));
+            border-radius: 10px;
+            transition: width 1s ease-in-out;
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            background: #dbeafe;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+
+        .activity-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .activity-number {
+            background: var(--secondary);
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .activity-title-main {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .activity-time {
+            background: #ecfdf5;
+            color: var(--secondary);
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-left: auto;
+        }
+
+        .prompt-box {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .prompt-title {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .prompt-content {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            border-left: 3px solid var(--primary);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: inherit;
+            margin: 0.5rem 0 1rem;
+            resize: vertical;
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 0.5rem 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: var(--primary-dark);
+        }
+
+        .resources-section {
+            background: #fffbeb;
+            border-left: 4px solid var(--warning);
+            padding: 1.5rem;
+            border-radius: 0 10px 10px 0;
+            margin-top: 2rem;
+        }
+
+        .resources-title {
+            font-size: 1.2rem;
+            color: var(--warning);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .resource-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .resource-list li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .resource-list li:before {
+            content: "•";
+            color: var(--warning);
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        .resource-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .resource-link:hover {
+            text-decoration: underline;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .nav-button {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        .back-button {
+            background: var(--gray);
+        }
+
+        .back-button:hover {
+            background: #475569;
+        }
+
+        /* Estilos específicos para el Bloque 3 - Modificado */
+        
+        .collab-space {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .collab-title {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .participant-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-left: 3px solid var(--secondary);
+        }
+
+        .participant-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .participant-name {
+            font-weight: bold;
+            color: var(--dark);
+        }
+
+        .participant-context {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .feedback-section {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed #e2e8f0;
+        }
+
+        .feedback-title {
+            font-size: 1rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .feedback-item {
+            background: #f1f5f9;
+            padding: 0.8rem;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .feedback-author {
+            font-weight: bold;
+            color: var(--primary-dark);
+        }
+
+        /* Guía de Feedback */
+        .feedback-guide {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .guide-title {
+            font-weight: bold;
+            color: var(--warning);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Sección de Identificación de Grupo */
+        .group-id-section {
+            background: #ecfdf5;
+            border-left: 4px solid var(--secondary);
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .group-id-title {
+            font-weight: bold;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Sección de Asignación Automática */
+        .assignment-section {
+            background: #dbeafe;
+            border-left: 4px solid var(--primary);
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .assignment-title {
+            font-weight: bold;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Sección de Dar Feedback */
+        .give-feedback-section {
+            background: #f0f9ff;
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .give-feedback-title {
+            font-weight: bold;
+            color: #3b82f6;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Sección de Recibir y Seleccionar Feedback */
+        .receive-feedback-section {
+            background: #f0fdf4;
+            border-left: 4px solid var(--success);
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .receive-feedback-title {
+            font-weight: bold;
+            color: var(--success);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+            border-top: 1px solid #e2e8f0;
+            background: #f8fafc;
+        }
+
+        @media (max-width: 768px) {
+            .block-time-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-chart-line"></i> LAB AVALIAÇÃO</h1>
+            <p class="subtitle">Laboratório de Formação em Avaliação Educativa Potenciada por IA</p>
+        </header>
+
+        <!-- Barra de tiempo del Bloque 3 (40 min) -->
+        <div class="block-time-header">
+            <div class="block-title-main">Bloco 3: Intercâmbio e Colaboração</div>
+            <div class="time-display"><i class="fas fa-clock"></i> 40 minutos</div>
+        </div>
+        <div class="time-bar-container">
+            <div class="time-bar" id="timeBar"></div>
+        </div>
+
+        <div class="content">
+            
+            <!-- Actividad 1 - Identificación del Grupo -->
+            <div class="section">
+                <div class="activity-header">
+                    <div class="activity-number">1</div>
+                    <div class="activity-title-main">Confirmação da Identidade do Seu Grupo</div>
+                    <div class="activity-time">2 min</div>
+                </div>
+                <p><strong>Objetivo:</strong> Recordar a identificação única do seu grupo de trabalho.</p>
+                
+                <div class="group-id-section">
+                    <h4 class="group-id-title"><i class="fas fa-users"></i> Identificador do Seu Grupo</h4>
+                    <p>Lembra-se que o seu grupo já foi identificado no início do LAB? Esta identificação é crucial para o intercâmbio desta fase.</p>
+                    <p><strong>Identificador do seu grupo (atribuído no Bloco 0):</strong></p>
+                    <input type="text" id="groupId" placeholder="Ex: Grupo_Alfa, G1, Equipe_Criativa..." style="width: 100%; padding: 0.8rem; border: 1px solid #e2e8f0; border-radius: 6px; font-family: inherit; margin-top: 0.5rem;">
+                    <button onclick="saveText('groupId', 'Identificador do grupo guardado!')" style="margin-top: 0.5rem;"><i class="fas fa-save"></i> Guardar Identificador</button>
+                </div>
+            </div>
+
+            <!-- Actividad 2 - Guía de Feedback Inter-Grupal -->
+            <div class="section">
+                <div class="activity-header">
+                    <div class="activity-number">2</div>
+                    <div class="activity-title-main">Guia para Feedback Inter-Grupal Eficaz</div>
+                    <div class="activity-time">3 min</div>
+                </div>
+                <p><strong>Objetivo:</strong> Compreender os princípios de um feedback estruturado e útil entre grupos diferentes.</p>
+                
+                <div class="feedback-guide">
+                    <h4 class="guide-title"><i class="fas fa-lightbulb"></i> Elementos-Chave de um Bom Feedback Inter-Grupal</h4>
+                    <ul style="padding-left: 1.2rem;">
+                        <li><strong>Objetivo:</strong> Foque no produto ou estratégia apresentada, não nas pessoas.</li>
+                        <li><strong>Específico:</strong> Refira-se a partes concretas da estratégia ou rúbrica. Ex: "Na rúbrica do critério X, o descritor do nível Y poderia ser mais claro ao mencionar..."</li>
+                        <li><strong>Construtivo:</strong> Aponte pontos fortes e sugira melhorias concretas. Ex: "Gostei da clareza dos critérios. Talvez possas considerar..."</li>
+                        <li><strong>Respeitoso:</strong> Foque na estratégia, não na pessoa. Use "A estratégia pode ser aprimorada..." em vez de "Tu podes melhorar...".</li>
+                        <li><strong>Conciso:</strong> Seja direto e claro. O tempo é limitado.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Actividad 3 - Intercambio de Estratégias y Asignación de Feedback -->
+            <div class="section">
+                <div class="activity-header">
+                    <div class="activity-number">3</div>
+                    <div class="activity-title-main">Intercâmbio de Estratégias e Atribuição de Feedback</div>
+                    <div class="activity-time">25 min</div>
+                </div>
+                <p><strong>Objetivo:</strong> Apresentar estratégias e preparar-se para dar e receber feedback estruturado.</p>
+                
+                <p><strong>Instruções para o(a) professor(a):</strong></p>
+                <p>Vocês já estão organizados em grupos de 2-3 pessoas. Agora, cada grupo irá:</p>
+
+                <!-- Sección de Asignación Automática Actualizada -->
+                <div class="assignment-section">
+                    <h4 class="assignment-title"><i class="fas fa-tasks"></i> Passo 1: Apresentação dos Grupos Designados pelo Sistema</h4>
+                    <p><strong>Importante:</strong> O sistema <strong>atribuiu automaticamente</strong> dois grupos aos quais vocês fornecerão feedback. Estes grupos serão os seus "Grupos Receptores". Esta atribuição garante variedade e evita repetições.</p>
+                    
+                    <p><strong>Identificadores dos Grupos Receptores (atribuídos pelo sistema):</strong></p>
+                    <input type="text" id="receiverGroup1" placeholder="Grupo designado automaticamente pelo sistema..." style="width: 100%; padding: 0.8rem; border: 1px solid #e2e8f0; border-radius: 6px; font-family: inherit; margin-top: 0.5rem; margin-bottom: 0.5rem;" readonly>
+                    <input type="text" id="receiverGroup2" placeholder="Grupo designado automaticamente pelo sistema..." style="width: 100%; padding: 0.8rem; border: 1px solid #e2e8f0; border-radius: 6px; font-family: inherit; margin-top: 0.5rem; margin-bottom: 1rem;" readonly>
+                    
+                    <p><em>(Nota: Numa implementação real, estes campos seriam preenchidos automaticamente pelo sistema com base nos grupos registrados e numa lógica de atribuição aleatória e controlada.)</em></p>
+                </div>
+
+                <div class="give-feedback-section">
+                    <h4 class="give-feedback-title"><i class="fas fa-comment-dots"></i> Passo 2: Dar Feedback aos Grupos Receptores</h4>
+                    <p>Revise a estratégia de avaliação assistida por IA criada pelos "Grupos Receptores". Use a guia acima para fornecer um feedback escrito conciso e construtivo.</p>
+                    
+                    <p><strong>Feedback para o Grupo <span id="grupoReceptorDisplay1">[Identificador Automático 1]</span>:</strong></p>
+                    <textarea id="feedbackToGive1" placeholder="Escreva aqui o seu feedback estruturado e construtivo para o primeiro grupo designado..."></textarea>
+                    <button onclick="saveText('feedbackToGive1', 'Feedback para o primeiro grupo guardado!')"><i class="fas fa-paper-plane"></i> Enviar Feedback para Grupo 1</button>
+                    
+                    <p><strong>Feedback para o Grupo <span id="grupoReceptorDisplay2">[Identificador Automático 2]</span>:</strong></p>
+                    <textarea id="feedbackToGive2" placeholder="Escreva aqui o seu feedback estruturado e construtivo para o segundo grupo designado..."></textarea>
+                    <button onclick="saveText('feedbackToGive2', 'Feedback para o segundo grupo guardado!')"><i class="fas fa-paper-plane"></i> Enviar Feedback para Grupo 2</button>
+                </div>
+
+                <div class="receive-feedback-section">
+                    <h4 class="receive-feedback-title"><i class="fas fa-inbox"></i> Passo 3: Receber Feedback de Outros Grupos</h4>
+                    <p>Você também receberá feedback de <strong>outros dois grupos</strong> que o sistema atribuiu para avaliar a sua estratégia. Neste ambiente simulado, imagine que recebeu vários feedbacks. O sistema garante que os grupos receptores sean seleccionados de manera aleatória y controlada.</p>
+                    
+                    <p><strong>Espaço para Feedbacks Recebidos (Simulação):</strong></p>
+                    <div class="feedback-item">
+                        <span class="feedback-author">[Grupo Omega]:</span> 
+                        "A rúbrica está bem estruturada. Uma sugestão é tornar os descritores do nível 'Bom' mais distintos do nível 'Suficiente' para facilitar a diferenciação."
+                    </div>
+                    <div class="feedback-item">
+                        <span class="feedback-author">[Grupo Delta]:</span> 
+                        "A integração com a IA está clara. Considerem incluir um exemplo de prompt específico que os alunos poderiam usar para autoavaliação."
+                    </div>
+                    <!-- Espacio para que el grupo registre reflexiones -->
+                    <textarea id="reflexaoFeedbackRecebido" placeholder="Como grupo, reflitam sobre os feedbacks recebidos. Que pontos foram mais úteis? Que ajustes consideram?..."></textarea>
+                    <button onclick="saveText('reflexaoFeedbackRecebido', 'Reflexão sobre feedbacks recebidos guardada!')"><i class="fas fa-save"></i> Guardar Reflexão do Grupo</button>
+                </div>
+            </div>
+
+            <!-- Actividad 4 - Selección de Feedback y Reflexión -->
+            <div class="section">
+                <div class="activity-header">
+                    <div class="activity-number">4</div>
+                    <div class="activity-title-main">Seleção de Feedback e Reflexão</div>
+                    <div class="activity-time">7 min</div>
+                </div>
+                <p><strong>Objetivo:</strong> Analisar os feedbacks recebidos e refletir sobre aprendizagens e melhorias.</p>
+                
+                <p><strong>Instruções para o(a) professor(a):</strong></p>
+                <p>Como grupo, analisem os feedbacks recebidos (reais ou simulados).</p>
+                <ol>
+                    <li><strong>Discussão Interna:</strong> Discutam os pontos comuns e as sugestões mais valiosas.</li>
+                    <li><strong>Seleção:</strong> Escolham <strong>1 ou 2 feedbacks</strong> que considerem <strong>mais relevantes</strong> para melhorar a vossa estratégia.</li>
+                </ol>
+
+                <p><strong>Feedback(s) Selecionado(s) para Reflexão:</strong></p>
+                <textarea id="selectedFeedback" placeholder="Cole ou descreva o(s) feedback(s) que o grupo selecionou como mais útil(is)..."></textarea>
+                <button onclick="saveText('selectedFeedback', 'Feedback selecionado guardado!')"><i class="fas fa-check-circle"></i> Guardar Seleção</button>
+
+                <p><strong>Reflexão do Grupo sobre o Feedback Recebido:</strong></p>
+                <textarea id="groupReflection" placeholder="Como grupo, reflitam: Que aprendizados tiramos? Que mudanças consideramos?..."></textarea>
+                <button onclick="saveText('groupReflection', 'Reflexões do grupo guardadas!')"><i class="fas fa-save"></i> Guardar Reflexões</button>
+            </div>
+
+            <!-- Actividad 5 - Identificación de Sinergias (Mantida) -->
+            <div class="section">
+                <div class="activity-header">
+                    <div class="activity-number">5</div>
+                    <div class="activity-title-main">Identificação de Sinergias e Boas Práticas</div>
+                    <div class="activity-time">3 min</div>
+                </div>
+                <p><strong>Objetivo:</strong> Identificar elementos comuns, diferencias valiosas e boas práticas entre as abordagens partilhadas.</p>
+                
+                <p><strong>Instruções para o(a) professor(a):</strong></p>
+                <p>Como grupo, discutam e respondam às seguintes questões:</p>
+                <ol>
+                    <li><strong>Sinergias:</strong> Que elementos das estratégias partilhadas podem ser úteis no vosso contexto?</li>
+                    <li><strong>Diferenças Valiosas:</strong> Que abordagens diferentes descobriram que poderiam enriquecer a vossa prática?</li>
+                    <li><strong>Boas Práticas:</strong> Que estratégias específicas de design de rúbricas ou uso de IA na avaliação destacaram?</li>
+                </ol>
+
+                <p><strong>Registro de aprendizagens do intercâmbio:</strong></p>
+                <textarea id="aprendizagens3" placeholder="Registe aqui as principais aprendizagens e sinergias identificadas pelo grupo..."></textarea>
+                <button onclick="saveText('aprendizagens3', 'Aprendizagens do grupo guardadas!')"><i class="fas fa-save"></i> Guardar Aprendizagens</button>
+                
+                <p><strong>Boas práticas identificadas:</strong></p>
+                <textarea id="boasPraticas3" placeholder="Liste aqui as boas práticas que o grupo identificou..."></textarea>
+                <button onclick="saveText('boasPraticas3', 'Boas práticas guardadas!')"><i class="fas fa-save"></i> Guardar Boas Práticas</button>
+            </div>
+
+            <!-- Sección de Recursos -->
+            <div class="resources-section">
+                <h3 class="resources-title"><i class="fas fa-folder-open"></i> Recursos do Bloco 3</h3>
+                <ul class="resource-list">
+                    <li><strong>GPTs Especializados:</strong>
+                        <a href="https://chatgpt.com/g/g-6846bb52c87c81919e902251f19e9d36-evaluaia" class="resource-link" target="_blank">EvaluaIA - Guía y diseño de evaluación</a>
+                    </li>
+                    <li><strong>GPTs Especializados:</strong>
+                        <a href="https://chatgpt.com/g/g-686e3f5ad0d48191b9f091277af64a14-domina-gpt" class="resource-link" target="_blank">Domina GPT - Metodología y estrategia</a>
+                    </li>
+                    <li><strong>Documentos de Apoio:</strong>
+                        <a href="#" class="resource-link">[PDF: "Trabalho Colaborativo entre Docentes"]</a>
+                    </li>
+                </ul>
+                <p><em>Nota: Estes links serão ativados com os recursos reais do projeto.</em></p>
+            </div>
+
+            <!-- Síntese -->
+            <div class="section">
+                <div class="activity-header">
+                    <div class="activity-number">6</div>
+                    <div class="activity-title-main">Síntese do Bloco 3 (Momento Meta-cognitivo)</div>
+                    <div class="activity-time">Obrigatório</div>
+                </div>
+                <p><strong>Objetivo:</strong> Refletir sobre o valor do intercâmbio e a preparação para a implementação.</p>
+                
+                <p><strong>Pergunta para reflexão final:</strong></p>
+                <p><em>Qual foi o insight mais valioso que recebi dos meus colegas neste bloco de intercâmbio?</em></p>
+
+                <textarea id="sinteseFinal3" placeholder="Escreva aqui o seu insight mais valioso..."></textarea>
+                <button onclick="saveText('sinteseFinal3', 'Síntese final do Bloco 3 guardada!')"><i class="fas fa-save"></i> Guardar Síntese Final</button>
+                
+                <!-- Aviso sobre almacenamiento -->
+                <div style="margin-top: 1rem; padding: 1rem; background: #f0f9ff; border-radius: 8px; border-left: 4px solid var(--primary);">
+                    <p><strong><i class="fas fa-database"></i> Nota sobre Armazenamento:</strong> Os feedbacks e sínteses deste bloco também serão guardados para a sua revisão posterior.</p>
+                </div>
+            </div>
+
+            <!-- Botones de navegación -->
+            <div class="nav-buttons">
+                <button class="nav-button back-button" onclick="window.location.href='bloque2.html'"><i class="fas fa-arrow-left"></i> Bloco Anterior</button>
+                <button class="nav-button" onclick="window.location.href='bloque4.html'">Próximo Bloco <i class="fas fa-arrow-right"></i></button>
+            </div>
+
+        </div>
+
+        <footer>
+            <p>FormaIA - Laboratório de Formação em IA Educativa | Portugal 2024</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simular el llenado de la barra de tiempo para el Bloco 3 (40 min de 120 min totales)
+        document.addEventListener('DOMContentLoaded', function() {
+            const timeBar = document.getElementById('timeBar');
+            // 40/120 = 33.33%, redondeamos a 33%
+            setTimeout(() => {
+                timeBar.style.width = '33%';
+            }, 500);
+            
+            // Simular la asignación automática de grupos receptores
+            // En una implementación real, esto vendría del backend
+            simulateAutomaticAssignment();
+        });
+
+        // Función para simular la asignación automática (solo para demostración)
+        function simulateAutomaticAssignment() {
+            // En una aplicación real, estos valores vendrían del servidor
+            // Aquí los simulamos con valores de ejemplo
+            const grupoIdInput = document.getElementById('groupId');
+            const grupoReceptor1 = document.getElementById('receiverGroup1');
+            const grupoReceptor2 = document.getElementById('receiverGroup2');
+            const display1 = document.getElementById('grupoReceptorDisplay1');
+            const display2 = document.getElementById('grupoReceptorDisplay2');
+
+            // Simulamos que el grupo actual es "Grupo_Alfa"
+            grupoIdInput.value = "Grupo_Alfa"; 
+            
+            // Simulamos la asignación automática de dos grupos receptores
+            grupoReceptor1.value = "Grupo_Beta";
+            grupoReceptor2.value = "Grupo_Gamma";
+            
+            // Actualizamos los displays en los títulos de los feedbacks
+            display1.textContent = grupoReceptor1.value;
+            display2.textContent = grupoReceptor2.value;
+        }
+
+        // Función simple para simular guardar texto
+        function saveText(elementId, message) {
+            const text = document.getElementById(elementId).value;
+            if (text.trim() !== "") {
+                // En una implementación real, aquí se guardaría en localStorage, sessionStorage o se enviaría a un servidor.
+                console.log(`Texto guardado de ${elementId}:`, text);
+                
+                // --- LÓGICA DE ALMACENAMIENTO SIMULADA ---
+                localStorage.setItem(`lab_avaliacao_${elementId}`, text);
+                // --- FIN LÓGICA DE ALMACENAMIENTO SIMULADA ---
+                
+                alert(message);
+            } else {
+                alert("Por favor, escreva algo antes de guardar.");
+            }
+        }
+        
+        // Función para guardar múltiples textos (aunque no se use aquí, la dejamos por si acaso)
+        function saveMultipleTexts(elementIds, message) {
+            let allSaved = true;
+            elementIds.forEach(id => {
+                const text = document.getElementById(id).value;
+                if (text.trim() !== "") {
+                    console.log(`Texto guardado de ${id}:`, text);
+                    localStorage.setItem(`lab_avaliacao_${id}`, text);
+                } else {
+                    allSaved = false;
+                }
+            });
+            if (allSaved) {
+                alert(message);
+            } else {
+                alert("Por favor, preencha todos os campos antes de guardar.");
+            }
+        }
+    </script>
+</body>
+</html>

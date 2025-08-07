@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAB Avaliação - Portada</title>
+    <style>
+        :root {
+            --primary: #f7dc6f; /* Amarillo vibrante */
+            --secondary: #ffffff; /* Blanco */
+            --dark: #1e293b; /* Texto oscuro */
+        }
+
+        body {
+            background-color: var(--primary);
+            color: var(--dark);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Elementos visuales de fondo (círculos) */
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--secondary);
+            opacity: 0.1;
+        }
+
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            left: -100px;
+        }
+
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -50px;
+            right: 100px;
+        }
+
+        .circle-3 {
+            width: 150px;
+            height: 150px;
+            top: 100px;
+            right: -50px;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 800px;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            margin-top: 2rem;
+            width: 180px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .date {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--dark);
+            margin-top: 1rem;
+        }
+
+        .start-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: var(--dark);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .start-button:hover {
+            background-color: #0f172a;
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Círculos decorativos de fondo -->
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+    <div class="circle circle-3"></div>
+
+    <div class="container">
+        <h1>LAB AVALIAÇÃO</h1>
+        <p><strong>Laboratório de Formação em Avaliação Educativa Potenciada por IA</strong></p>
+        <p class="date">Setembro 2025</p>
+        <!-- Logo: Reemplaza la URL con la de tu logo real -->
+        <img src="https://via.placeholder.com/180x60?text=Logo+Organización" alt="Logo da Organização" class="logo">
+        <br>
+        <a href="bienvenida.html" class="start-button">Entrar no LAB</a>
+    </div>
+</body>
+</html>
