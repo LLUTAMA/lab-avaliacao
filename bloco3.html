@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>LAB Avaliação — Bloco 3</title>
+  <link rel="stylesheet" href="assets/style.css"/>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="logo">LAB Avaliação</div>
+      <nav class="nav">
+        <a href="index.html">Portada</a>
+        <a href="bloco1.html">Bloco 1</a>
+        <a href="bloco2.html">Bloco 2</a>
+        <a href="bloco3.html">Bloco 3</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <section class="card">
+      <h1>Bloco 3 — Intercâmbio e colaboração</h1>
+      <p class="lead">Versão provisória: o pareamento é gerado <strong>no dispositivo</strong> para demonstração. Na versão final, será atribuído automaticamente pelo sistema.</p>
+      <div class="row two">
+        <div>
+          <label for="meuGrupo">O nome do seu grupo</label>
+          <input id="meuGrupo" class="input" placeholder="ex.: AVALIAR+IA"/>
+        </div>
+        <div>
+          <label for="listaGrupos">Lista de grupos (separados por vírgulas)</label>
+          <input id="listaGrupos" class="input" placeholder="ex.: Alfa, Beta, Gama, Delta, Épsilon"/>
+        </div>
+      </div>
+      <p><button class="btn" id="gerar">Gerar pareamentos</button></p>
+      <div class="row two">
+        <div class="card">
+          <h2>Dar feedback a</h2>
+          <ul id="dar"></ul>
+        </div>
+        <div class="card">
+          <h2>Feedback recebido</h2>
+          <ul id="receber"></ul>
+        </div>
+      </div>
+      <div class="status"></div>
+    </section>
+  </main>
+  <footer>© 2025 LAB Avaliação — versão provisória</footer>
+  <script>
+    function shuffle(arr){ return arr.map(function(v){return [Math.random(),v];}).sort(function(a,b){return a[0]-b[0];}).map(function(x){return x[1];}); }
+    function ringAssignments(groups){
+      var n = groups.length;
+      var out = { give: {}, receive: {} };
+      for(var i=0;i<n;i++){ var g = groups[i]; var g1 = groups[(i+1)%n]; var g2 = groups[(i+2)%n]; out.give[g] = [g1,g2]; }
+      for(var i=0;i<n;i++){ var g = groups[i]; var a = out.give[g][0]; var b = out.give[g][1]; 
+        out.receive[a] = (out.receive[a]||[]).concat([g]);
+        out.receive[b] = (out.receive[b]||[]).concat([g]);
+      }
+      return out;
+    }
+    document.getElementById('gerar').addEventListener('click', function(){
+      var me = document.getElementById('meuGrupo').value.trim();
+      var list = document.getElementById('listaGrupos').value.split(',').map(function(s){return s.trim();}).filter(Boolean);
+      if(!me || list.length < 3){ alert('Introduza o seu grupo e pelo menos 3 grupos no total.'); return; }
+      if(list.indexOf(me) === -1) list.unshift(me);
+      var groups = shuffle(Array.from(new Set(list)));
+      var net = ringAssignments(groups);
+      var dar = net.give[me]||[];
+      var rec = net.receive[me]||[];
+      var ulDar = document.getElementById('dar'); ulDar.innerHTML='';
+      var ulRec = document.getElementById('receber'); ulRec.innerHTML='';
+      dar.forEach(function(g){ var li=document.createElement('li'); li.textContent = g; ulDar.appendChild(li); });
+      rec.forEach(function(g){ var li=document.createElement('li'); li.textContent = g; ulRec.appendChild(li); });
+      document.querySelector('.status').textContent = 'Pareamentos gerados localmente (demonstração).';
+    });
+  </script>
+</body>
+</html>
