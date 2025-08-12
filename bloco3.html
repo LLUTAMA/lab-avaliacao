@@ -1,79 +1,207 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>LAB Avaliação — Bloco 3</title>
-  <link rel="stylesheet" href="assets/style.css"/>
+  <style>
+    :root{
+      --bg:#0b1220;--panel:#121a2b;--muted:#8ea0b5;--text:#e7eef7;--brand:#4da3ff;--accent:#7dd3fc;--ok:#22c55e;--warn:#f59e0b;
+      --ring: rgba(77,163,255,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif}
+    a{color:var(--accent);text-decoration:none}
+    header{display:flex;gap:16px;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #1e2a43;background:linear-gradient(180deg,#0b1220 0,#0b1220d9 100%)}
+    .brand{font-weight:700;letter-spacing:.3px}
+    nav a{color:var(--muted);margin:0 8px;padding:8px 10px;border-radius:10px}
+    nav a.active{color:var(--text);background:#1a2742}
+    main{max-width:980px;margin:32px auto;padding:0 16px}
+    .card{background:var(--panel);border:1px solid #1e2a43;border-radius:14px;padding:18px 18px 16px;box-shadow:0 10px 30px rgba(4,10,20,.45)}
+    .row{display:grid;gap:16px}
+    @media (min-width:860px){.row{grid-template-columns:1.2fr 1fr}}
+    .label{font-size:.9rem;color:var(--muted);margin-bottom:8px}
+    input,button,select{
+      font:inherit;color:inherit;background:#0d1526;border:1px solid #243252;border-radius:10px;padding:10px 12px;outline:none;
+    }
+    input:focus,select:focus{border-color:var(--brand);box-shadow:0 0 0 4px var(--ring)}
+    button{cursor:pointer;background:linear-gradient(180deg,#1f3c72,#1a3260);border-color:#274984}
+    button:hover{filter:brightness(1.08)}
+    .muted{color:var(--muted)}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:4px 10px;border-radius:999px;background:#14213a;color:var(--muted);font-size:.85rem}
+    ul{margin:8px 0 0 0;padding-left:18px}
+    .ok{color:var(--ok)} .warn{color:var(--warn)}
+    .footer{margin-top:22px;font-size:.9rem;color:var(--muted)}
+    .inline{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .small{font-size:.92rem}
+    .hint{font-size:.9rem;color:var(--muted)}
+    .tag{display:inline-block;padding:2px 8px;border-radius:999px;background:#173055;border:1px solid #274984;color:#cfe3ff;font-size:.8rem}
+    .error{color:#f87171}
+  </style>
 </head>
 <body>
-  <header class="header">
-    <div class="container">
-      <div class="logo">LAB Avaliação</div>
-      <nav class="nav">
-        <a href="index.html">Portada</a>
-        <a href="bloco1.html">Bloco 1</a>
-        <a href="bloco2.html">Bloco 2</a>
-        <a href="bloco3.html">Bloco 3</a>
-      </nav>
+  <header>
+    <div class="inline">
+      <div class="brand">LAB Avaliação</div>
+      <span class="tag">versão com API</span>
     </div>
+    <nav>
+      <a href="index.html">Portada</a>
+      <a href="bloco1.html">Bloco 1</a>
+      <a href="bloco2.html">Bloco 2</a>
+      <a href="bloco3.html" class="active">Bloco 3</a>
+    </nav>
   </header>
-  <main class="container">
+
+  <main class="row">
     <section class="card">
-      <h1>Bloco 3 — Intercâmbio e colaboração</h1>
-      <p class="lead">Versão provisória: o pareamento é gerado <strong>no dispositivo</strong> para demonstração. Na versão final, será atribuído automaticamente pelo sistema.</p>
-      <div class="row two">
-        <div>
-          <label for="meuGrupo">O nome do seu grupo</label>
-          <input id="meuGrupo" class="input" placeholder="ex.: AVALIAR+IA"/>
+      <h2 style="margin:4px 0 10px">Intercâmbio e colaboração</h2>
+      <p class="muted small" style="margin:0 0 12px">
+        Este bloco usa a lista real de grupos a partir da inscrição (Google Sheets via API) e aplica um pareamento
+        determinista: cada grupo dá feedback a <b>2 grupos seguintes</b> na lista e recebe de <b>2 anteriores</b>.
+      </p>
+
+      <div style="margin:14px 0 10px">
+        <div class="label">O nome do seu grupo</div>
+        <div class="inline">
+          <input id="meuGrupo" placeholder="Escreva exatamente como na inscrição…" style="min-width:280px" />
+          <button id="btnGerar">Gerar pareamentos</button>
+          <button id="btnLimpar" title="Limpar nome e resultados">Limpar</button>
         </div>
-        <div>
-          <label for="listaGrupos">Lista de grupos (separados por vírgulas)</label>
-          <input id="listaGrupos" class="input" placeholder="ex.: Alfa, Beta, Gama, Delta, Épsilon"/>
+        <div class="hint" style="margin-top:6px">
+          Dica: o seu grupo deve existir na lista oficial. O código do curso usado é <b>“LAB Avaliação-2025”</b>.
+        </div>
+        <div id="status" class="muted small" style="margin-top:10px"></div>
+      </div>
+
+      <div class="row" style="margin-top:10px">
+        <div class="card">
+          <div class="label">Dar feedback a</div>
+          <ul id="listaDar"></ul>
+        </div>
+        <div class="card">
+          <div class="label">Feedback recebido de</div>
+          <ul id="listaReceber"></ul>
         </div>
       </div>
-      <p><button class="btn" id="gerar">Gerar pareamentos</button></p>
-      <div class="row two">
-        <div class="card">
-          <h2>Dar feedback a</h2>
-          <ul id="dar"></ul>
-        </div>
-        <div class="card">
-          <h2>Feedback recebido</h2>
-          <ul id="receber"></ul>
-        </div>
+
+      <div class="footer">
+        <span class="pill">Fonte: Google Apps Script (Web App) → Google Sheets</span>
       </div>
-      <div class="status"></div>
     </section>
+
+    <aside class="card">
+      <h3 style="margin:0 0 8px">Como funciona</h3>
+      <ol class="small" style="margin:0 0 12px 18px">
+        <li>Buscamos a folha de respostas do formulário (API JSON).</li>
+        <li>Filtramos por <i>código do curso = LAB Avaliação-2025</i>.</li>
+        <li>Extraímos os nomes de grupo únicos e ordenamos (A→Z).</li>
+        <li>Pareamento round-robin: cada grupo i dá a (i+1) e (i+2), recebe de (i-1) e (i-2).</li>
+      </ol>
+      <div class="hint">Isto garante 2 para dar / 2 para receber, sem colisões e de forma estável.</div>
+    </aside>
   </main>
-  <footer>© 2025 LAB Avaliação — versão provisória</footer>
+
   <script>
-    function shuffle(arr){ return arr.map(function(v){return [Math.random(),v];}).sort(function(a,b){return a[0]-b[0];}).map(function(x){return x[1];}); }
-    function ringAssignments(groups){
-      var n = groups.length;
-      var out = { give: {}, receive: {} };
-      for(var i=0;i<n;i++){ var g = groups[i]; var g1 = groups[(i+1)%n]; var g2 = groups[(i+2)%n]; out.give[g] = [g1,g2]; }
-      for(var i=0;i<n;i++){ var g = groups[i]; var a = out.give[g][0]; var b = out.give[g][1]; 
-        out.receive[a] = (out.receive[a]||[]).concat([g]);
-        out.receive[b] = (out.receive[b]||[]).concat([g]);
-      }
-      return out;
+    // ===== CONFIGURAÇÃO =====
+    const API_URL = "https://script.google.com/macros/s/AKfycbx0e79fR0mxtygQkkR9kU_AEfZ2P0HKNL3lSXTecCXoGhEX6xECcd43Ipb9uyJQ9ZKMPw/exec";
+    const CODIGO_CURSO = "LAB Avaliação-2025";   // deve coincidir com o que guardas no Forms
+    const COLUNA_GRUPO = "Nome do grupo";        // mude se no seu Sheet o cabeçalho for diferente
+
+    // ===== ELEMENTOS =====
+    const elMeuGrupo = document.getElementById("meuGrupo");
+    const elBtnGerar = document.getElementById("btnGerar");
+    const elBtnLimpar = document.getElementById("btnLimpar");
+    const elListaDar = document.getElementById("listaDar");
+    const elListaReceber = document.getElementById("listaReceber");
+    const elStatus = document.getElementById("status");
+
+    // guarda/recupera o nome do grupo localmente
+    const LS_KEY = "lab_avaliacao_meu_grupo";
+    elMeuGrupo.value = localStorage.getItem(LS_KEY) || "";
+
+    function setStatus(msg, kind="info"){
+      const colors = {info:"var(--muted)", ok:"var(--ok)", warn:"var(--warn)", err:"#f87171"};
+      elStatus.textContent = msg;
+      elStatus.style.color = colors[kind] || colors.info;
     }
-    document.getElementById('gerar').addEventListener('click', function(){
-      var me = document.getElementById('meuGrupo').value.trim();
-      var list = document.getElementById('listaGrupos').value.split(',').map(function(s){return s.trim();}).filter(Boolean);
-      if(!me || list.length < 3){ alert('Introduza o seu grupo e pelo menos 3 grupos no total.'); return; }
-      if(list.indexOf(me) === -1) list.unshift(me);
-      var groups = shuffle(Array.from(new Set(list)));
-      var net = ringAssignments(groups);
-      var dar = net.give[me]||[];
-      var rec = net.receive[me]||[];
-      var ulDar = document.getElementById('dar'); ulDar.innerHTML='';
-      var ulRec = document.getElementById('receber'); ulRec.innerHTML='';
-      dar.forEach(function(g){ var li=document.createElement('li'); li.textContent = g; ulDar.appendChild(li); });
-      rec.forEach(function(g){ var li=document.createElement('li'); li.textContent = g; ulRec.appendChild(li); });
-      document.querySelector('.status').textContent = 'Pareamentos gerados localmente (demonstração).';
-    });
+
+    async function fetchGrupos() {
+      setStatus("A obter grupos…");
+      const res = await fetch(API_URL, { cache: "no-store" });
+      if (!res.ok) throw new Error("Falha ao obter dados da API");
+      const rows = await res.json(); // array de objetos com os cabeçalhos do Sheet
+
+      // filtra por código do curso, se a coluna existir
+      const temColunaCodigo = rows.length && ("Código do curso." in rows[0] || "Código do curso" in rows[0]);
+      const grupos = new Set();
+
+      for (const r of rows) {
+        const codigo = r["Código do curso."] ?? r["Código do curso"] ?? "";
+        if (temColunaCodigo && (codigo || "").trim() !== CODIGO_CURSO) continue;
+
+        const nomeGrupo = (r[COLUNA_GRUPO] || "").trim();
+        if (nomeGrupo) grupos.add(nomeGrupo);
+      }
+      return Array.from(grupos).sort((a,b)=>a.localeCompare(b,'pt',{sensitivity:"base"}));
+    }
+
+    // pareamento determinista: i dá a (i+1) e (i+2); recebe de (i-1) e (i-2) modulo N
+    function parearRoundRobin(lista, meu) {
+      const n = lista.length;
+      const idx = lista.findIndex(g=>g.toLowerCase()===meu.toLowerCase());
+      if (idx === -1) throw new Error("O seu grupo não foi encontrado na lista oficial.");
+
+      const mod = (a,b)=>((a%b)+b)%b;
+      const dar = [ lista[mod(idx+1,n)], lista[mod(idx+2,n)] ];
+      const receber = [ lista[mod(idx-1,n)], lista[mod(idx-2,n)] ];
+      return { dar, receber };
+    }
+
+    function renderList(ul, arr){
+      ul.innerHTML = "";
+      for (const g of arr){
+        const li = document.createElement("li");
+        li.textContent = g;
+        ul.appendChild(li);
+      }
+    }
+
+    async function gerar() {
+      try {
+        const meu = elMeuGrupo.value.trim();
+        if (!meu) { setStatus("Escreva o nome do seu grupo.", "warn"); return; }
+
+        localStorage.setItem(LS_KEY, meu);
+        setStatus("A sincronizar com a API…");
+
+        const grupos = await fetchGrupos();
+        if (grupos.length < 3) { setStatus("São necessários pelo menos 3 grupos.", "warn"); return; }
+
+        const { dar, receber } = parearRoundRobin(grupos, meu);
+        renderList(elListaDar, dar);
+        renderList(elListaReceber, receber);
+
+        setStatus(`Pareamentos gerados para «${meu}».`, "ok");
+      } catch (e) {
+        console.error(e);
+        setStatus(e.message || "Ocorreu um erro ao gerar pareamentos.", "err");
+      }
+    }
+
+    function limpar(){
+      elMeuGrupo.value = "";
+      localStorage.removeItem(LS_KEY);
+      elListaDar.innerHTML = "";
+      elListaReceber.innerHTML = "";
+      setStatus("Limpo. Introduza o nome do grupo e gere novamente.", "info");
+    }
+
+    elBtnGerar.addEventListener("click", gerar);
+    elBtnLimpar.addEventListener("click", limpar);
+
+    // opcional: se já tiver nome guardado, tenta gerar ao abrir
+    if (elMeuGrupo.value) gerar();
   </script>
 </body>
 </html>
