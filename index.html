@@ -1,34 +1,115 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>LAB Avaliação — Portada</title>
-  <link rel="stylesheet" href="assets/style.css"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LAB Avaliação – Portada</title>
+  <meta name="description" content="Laboratório de Formação em Avaliação Educativa Potenciada por IA. REIMAGINE EDUCATION. Setembro 2025.">
+  <style>
+    :root{
+      --bg:#0b1220;--panel:#121a2b;--muted:#8ea0b5;--text:#e7eef7;--brand:#4da3ff;--accent:#7dd3fc;--ok:#22c55e;--ring:rgba(77,163,255,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif}
+    a{color:var(--accent);text-decoration:none}
+    header{display:flex;gap:16px;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #1e2a43;background:linear-gradient(180deg,#0b1220 0,#0b1220d9 100%)}
+    .brand{font-weight:700;letter-spacing:.3px}
+    nav a{color:var(--muted);margin:0 8px;padding:8px 10px;border-radius:10px}
+    nav a:hover{background:#1a2742;color:#e7eef7}
+    .btn{display:inline-flex;gap:.6rem;align-items:center;background:linear-gradient(180deg,#1f3c72,#1a3260);border:1px solid #274984;color:#fff;padding:12px 16px;border-radius:12px;cursor:pointer}
+    .btn:hover{filter:brightness(1.08)}
+    .btn.secondary{background:#0d1526;color:#cfe3ff;border-color:#2a3b60}
+    .wrap{max-width:1080px;margin:0 auto;padding:0 18px}
+    .hero{display:grid;place-items:center;min-height:58vh;text-align:center;padding:24px}
+    .hero h1{font-size:clamp(28px,4.2vw,44px);margin:.2em 0 .2em;font-weight:800;letter-spacing:.2px}
+    .hero p{color:var(--muted);font-size:clamp(15px,2vw,18px);max-width:840px;margin:0 auto 18px;line-height:1.6}
+    .cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+    .badge{display:inline-block;margin-top:10px;font-size:.9rem;padding:.28rem .7rem;border-radius:999px;background:#173055;border:1px solid #274984;color:#cfe3ff}
+    .panel{background:var(--panel);border:1px solid #1e2a43;border-radius:16px;padding:18px;box-shadow:0 10px 30px rgba(4,10,20,.45)}
+    .grid3{display:grid;gap:16px}
+    @media (min-width:860px){.grid3{grid-template-columns:1fr 1fr 1fr}}
+    h2{margin:0 0 8px}
+    .muted{color:var(--muted)}
+    .note{font-size:.95rem;color:var(--muted)}
+    footer{padding:24px 18px;border-top:1px solid #1e2a43;margin-top:28px;color:var(--muted);font-size:.92rem}
+    .list{margin:8px 0 0 0;padding-left:18px}
+    .tag{display:inline-block;padding:2px 8px;border-radius:999px;background:#173055;border:1px solid #274984;color:#cfe3ff;font-size:.8rem}
+    .spacer{height:20px}
+  </style>
 </head>
 <body>
-  <header class="header">
-    <div class="container">
-      <div class="logo">LAB Avaliação</div>
-      <nav class="nav">
-        <a href="index.html">Portada</a>
-        <a href="bloco1.html">Bloco 1</a>
-        <a href="bloco2.html">Bloco 2</a>
-        <a href="bloco3.html">Bloco 3</a>
-      </nav>
-    </div>
+  <header class="wrap">
+    <div class="brand">LAB Avaliação</div>
+    <nav>
+      <a href="index.html" aria-current="page">Portada</a>
+      <a href="bloco1.html">Bloco 1</a>
+      <a href="bloco2.html">Bloco 2</a>
+      <a href="bloco3.html">Bloco 3</a>
+    </nav>
   </header>
-  <main class="container">
-    <section class="card">
-      <h1>Bem‑vindo ao LAB de Avaliação</h1>
-      <p class="lead">Este é um protótipo funcional para testar a inscrição e o registo de respostas. A versão final manterá o mesmo aspeto do seu LAB.</p>
-      <p><span class="badge">Provisório</span> Os dados dos blocos são guardados <strong>no seu navegador</strong> nesta versão. A inscrição é feita pelo formulário oficial.</p>
-      <h2>Inscrição</h2>
-      <p>Comece pela inscrição com o <strong>código do curso</strong>, o <strong>seu e‑mail</strong> e o <strong>seu nome</strong>.</p>
-      <p><a class="btn" href="https://forms.gle/6xL4aq1236qaYxDQ7" target="_blank" rel="noopener">Inscrição no LAB</a></p>
-      <div class="status">Se já se inscreveu, pode avançar para o Bloco 1.</div>
+
+  <main>
+    <section class="hero wrap">
+      <div>
+        <span class="badge">REIMAGINE EDUCATION — Setembro 2025</span>
+        <h1>Laboratório de Formação em Avaliação Educativa<br/>Potenciada por IA</h1>
+        <p>
+          Um LAB prático para docentes do ensino <b>Primário, Secundário e Profissional</b>, focado em
+          <b>estratégias de avaliação</b>, <b>rubricas</b>, <b>autoavaliação</b> e <b>feedback entre pares</b> com o apoio de ferramentas de IA.
+        </p>
+        <div class="cta">
+          <!-- Substitui o link do Forms se tiveres um novo -->
+          <a class="btn" href="https://forms.gle/6xL4aq1236qaYxDQ7" target="_blank" rel="noopener">
+            ✍️ Inscrição no LAB
+          </a>
+          <a class="btn secondary" href="bloco1.html">➡️ Entrar no Bloco 1</a>
+          <a class="btn secondary" href="bloco2.html">➡️ Bloco 2</a>
+          <a class="btn secondary" href="bloco3.html">➡️ Bloco 3</a>
+        </div>
+        <div class="spacer"></div>
+        <div class="tag">Código do curso: <b>LAB Avaliação-2025</b> (escreve exatamente assim na inscrição)</div>
+      </div>
+    </section>
+
+    <section class="wrap" style="margin-top:6px">
+      <div class="grid3">
+        <div class="panel">
+          <h2>Bem-vindo(a) 👋</h2>
+          <p class="muted">
+            Este LAB está organizado em passos curtos e práticos. Em cada bloco, encontrará perguntas de reflexão,
+            espaços para escrever e guardar ideias, e momentos de colaboração.
+          </p>
+        </div>
+        <div class="panel">
+          <h2>Como funciona</h2>
+          <ul class="list muted">
+            <li>Inscreva-se usando o <b>código do curso</b> acima.</li>
+            <li>Forme um <b>grupo de 2–3 docentes</b> e dê um <b>nome ao grupo</b>.</li>
+            <li>No <b>Bloco 3</b>, o sistema atribui automaticamente o <b>feedback 1↔1</b>.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h2>O que vai aprender</h2>
+          <ul class="list muted">
+            <li>Desenho de tarefas e rubricas</li>
+            <li>Autoavaliação e metacognição</li>
+            <li>Feedback claro, acionável e ético</li>
+            <li>Como a IA pode apoiar cada etapa</li>
+          </ul>
+        </div>
+      </div>
+      <div class="panel" style="margin-top:16px">
+        <h2>Formação de grupos</h2>
+        <p class="muted">
+          Logo no início, organize-se em pares ou trios e registe o <b>nome do grupo</b> na inscrição.
+          Use sempre a mesma designação para que o sistema reconheça corretamente as suas contribuições.
+        </p>
+      </div>
     </section>
   </main>
-  <footer>© 2025 LAB Avaliação — versão provisória</footer>
+
+  <footer class="wrap">
+    <div>© 2025 LAB Avaliação — Plataforma educativa para docentes</div>
+  </footer>
 </body>
 </html>
