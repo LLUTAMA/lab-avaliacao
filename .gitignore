@@ -1,13 +1,1 @@
-# Fitxers del sistema macOS
 .DS_Store
-.AppleDouble
-.LSOverride
-
-# Fitxers de còpia de seguretat
-*.bak
-*.tmp
-*~
-
-# Carpetes temporals
-Thumbs.db
-ehthumbs.db
