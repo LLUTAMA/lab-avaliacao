@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LAB Avaliação — Bloco 4</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="wrap">
+  <div class="brand">LAB Avaliação</div>
+<nav>
+  <a href="index.html">Portada</a>
+  <a href="bloco1.html">Bloco 1</a>
+  <a href="bloco2.html">Bloco 2</a>
+  <a href="bloco3.html">Bloco 3</a>
+  <a href="bloco4.html" class="active">Bloco 4</a>
+  <a href="final.html">Final</a>
+</nav>
+</header>
+
+<main class="container">
+  <section class="card">
+    <h1>Bloco 4 — Compromissos de ação</h1>
+    <p class="lead">Defina um compromisso claro e exequível para aplicar no seu contexto. O conteúdo fica guardado apenas no seu navegador.</p>
+
+    <div class="row">
+      <div>
+        <label for="grupo">Nome do grupo (opcional)</label>
+        <input id="grupo" type="text" placeholder="Ex.: Lisboa 3" />
+      </div>
+      <div>
+        <label for="compromisso">Compromisso (uma frase)</label>
+        <textarea id="compromisso" rows="3" placeholder="Ex.: Implementar rubricas simples em duas tarefas de avaliação."></textarea>
+      </div>
+      <div>
+        <label for="passos">Passos concretos (pontos)</label>
+        <textarea id="passos" rows="5" placeholder="• Recolher exemplos de rubricas
+• Adaptar a uma tarefa específica
+• Testar com a turma A
+• Obter feedback e melhorar"></textarea>
+      </div>
+      <div>
+        <label for="indicador">Indicador de sucesso</label>
+        <textarea id="indicador" rows="3" placeholder="Ex.: 80% dos alunos compreendem os critérios antes de começar."></textarea>
+      </div>
+      <div>
+        <label for="prazo">Prazo</label>
+        <input id="prazo" type="date" />
+      </div>
+    </div>
+
+    <p>
+      <button class="btn" id="saveBtn">Guardar</button>
+      <button class="btn secondary" id="exportTxtBtn">Exportar .txt</button>
+      <button class="btn secondary" id="printBtn">Imprimir</button>
+    </p>
+    <p id="status"></p>
+  </section>
+
+  <section class="card">
+    <h2>Pré-visualização</h2>
+    <pre id="preview" class="small"></pre>
+  </section>
+</main>
+
+<footer>© 2025 LAB Avaliação — versão provisória</footer>
+
+<script>
+const KEY = 'lab_compromisso_v1';
+
+function ler() {
+  try { return JSON.parse(localStorage.getItem(KEY)) || {}; }
+  catch { return {}; }
+}
+
+function escrever(data) {
+  localStorage.setItem(KEY, JSON.stringify(data));
+}
+
+function toLines(d) {
+  const linhas = [];
+  if (d.grupo) linhas.push(`Grupo: ${d.grupo}`);
+  if (d.compromisso) linhas.push(`Compromisso: ${d.compromisso}`);
+  if (d.passos) linhas.push('Passos:\n' + d.passos);
+  if (d.indicador) linhas.push(`Indicador de sucesso: ${d.indicador}`);
+  if (d.prazo) linhas.push(`Prazo: ${d.prazo}`);
+  return linhas.join('\n\n');
+}
+
+function atualizarPreview() {
+  const d = recolher();
+  document.getElementById('preview').textContent = toLines(d);
+}
+
+function recolher() {
+  return {
+    grupo: document.getElementById('grupo').value.trim(),
+    compromisso: document.getElementById('compromisso').value.trim(),
+    passos: document.getElementById('passos').value.trim(),
+    indicador: document.getElementById('indicador').value.trim(),
+    prazo: document.getElementById('prazo').value
+  };
+}
+
+function preencher(d) {
+  document.getElementById('grupo').value = d.grupo || '';
+  document.getElementById('compromisso').value = d.compromisso || '';
+  document.getElementById('passos').value = d.passos || '';
+  document.getElementById('indicador').value = d.indicador || '';
+  document.getElementById('prazo').value = d.prazo || '';
+  atualizarPreview();
+}
+
+document.getElementById('saveBtn').addEventListener('click', () => {
+  const d = recolher();
+  escrever(d);
+  document.getElementById('status').textContent = 'Guardado no seu navegador.';
+  atualizarPreview();
+  setTimeout(()=>document.getElementById('status').textContent='', 2000);
+});
+
+['grupo','compromisso','passos','indicador','prazo'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', atualizarPreview);
+});
+
+document.getElementById('exportTxtBtn').addEventListener('click', () => {
+  const blob = new Blob([toLines(recolher())], {type:'text/plain;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'compromisso_bloco4.txt';
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+
+document.getElementById('printBtn').addEventListener('click', () => {
+  window.print();
+});
+
+// inicializar
+preencher(ler());
+</script>
+</body>
+</html>

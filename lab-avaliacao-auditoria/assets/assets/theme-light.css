@@ -1,0 +1,74 @@
+/* Tema Clar per LAB Avaliação */
+body {
+  background-color: #f9f9f9;
+  color: #222;
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+}
+
+.navbar {
+  background-color: #ffffff;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.navbar a {
+  color: #0066cc;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+.card {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 20px;
+  margin-top: 15px;
+}
+
+h1, h2, h3 {
+  color: #003366;
+}
+
+.btn {
+  background-color: #0066cc;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #004999;
+}
+
+.btn-secondary {
+  background-color: #aaa;
+  color: #fff;
+}
+
+.box {
+  border: 1px solid #ddd;
+  padding: 10px;
+  background: #f0f0f0;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  background: #ffc107;
+  color: #222;
+  border-radius: 4px;
+  font-size: 0.9em;
+}

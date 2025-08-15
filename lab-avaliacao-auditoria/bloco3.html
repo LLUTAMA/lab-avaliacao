@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LAB Avaliação — Bloco 3</title>
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/theme-light.css">
+
+
+
+</head>
+<body>
+  <header>
+    <div class="brand">LAB Avaliação</div>
+<nav>
+  <a href="index.html">Portada</a>
+  <a href="bloco1.html">Bloco 1</a>
+  <a href="bloco2.html">Bloco 2</a>
+  <a href="bloco3.html" class="active">Bloco 3</a>
+  <a href="bloco4.html">Bloco 4</a>
+  <a href="final.html">Final</a>
+</nav>
+  </header>
+
+  <main class="row">
+    <section class="card">
+      <h2 style="margin:4px 0 10px">Intercâmbio e colaboração (1↔1)</h2>
+      <p class="muted small" style="margin:0 0 12px">
+        Esta versão está fixa a <strong>1 feedback</strong> por grupo: cada grupo dá feedback a <strong>1</strong> e recebe de <strong>1</strong>, de forma determinista e sem colisões.
+      </p>
+
+      <div style="margin:14px 0 10px">
+        <div class="label">O nome do seu grupo</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+          <input id="meuGrupo" placeholder="Escreva exatamente como na inscrição…" style="min-width:280px" />
+          <button id="btnGerar">Gerar pareamento</button>
+          <button id="btnLimpar" title="Limpar nome e resultados">Limpar</button>
+        </div>
+        <div class="small muted" style="margin-top:6px">
+          Código do curso usado: <b>LAB Avaliação-2025</b>. Os nomes são lidos da folha de inscrição.
+        </div>
+        <div id="status" class="small muted" style="margin-top:10px"></div>
+      </div>
+
+      <div class="row" style="margin-top:10px">
+        <div class="card">
+          <div class="label">Dar feedback a</div>
+          <ul id="listaDar"></ul>
+        </div>
+        <div class="card">
+          <div class="label">Feedback recebido de</div>
+          <ul id="listaReceber"></ul>
+        </div>
+      </div>
+    </section>
+
+    <aside class="card">
+      <h3 style="margin:0 0 8px">Como funciona</h3>
+      <ol class="small" style="margin:0 0 12px 18px">
+        <li>Buscamos a folha de respostas do formulário (API JSON).</li>
+        <li>Filtramos por <i>código do curso = LAB Avaliação-2025</i>.</li>
+        <li>Extraímos os nomes de grupo únicos e ordenamos (A→Z).</li>
+        <li>Pareamento round-robin 1↔1: cada grupo dá a (i+1) e recebe de (i-1).</li>
+      </ol>
+    </aside>
+  </main>
+
+  <script>
+    // ===== CONFIGURAÇÃO (fixo a 1 feedback) =====
+    const API_URL = "https://script.google.com/macros/s/AKfycbx0e79fR0mxtygQkkR9kU_AEfZ2P0HKNL3lSXTecCXoGhEX6xECcd43Ipb9uyJQ9ZKMPw/exec";
+    const CODIGO_CURSO = "LAB Avaliação-2025";
+    const COLUNA_GRUPO = "Nome do grupo"; // adapte se o cabeçalho no Sheet for diferente
+    const LS_KEY = "lab_avaliacao_meu_grupo";
+
+    const elMeuGrupo = document.getElementById("meuGrupo");
+    const elBtnGerar = document.getElementById("btnGerar");
+    const elBtnLimpar = document.getElementById("btnLimpar");
+    const elListaDar = document.getElementById("listaDar");
+    const elListaReceber = document.getElementById("listaReceber");
+    const elStatus = document.getElementById("status");
+
+    elMeuGrupo.value = localStorage.getItem(LS_KEY) || "";
+
+    const slug = s => (s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().toLowerCase();
+    const uniq = arr => [...new Set(arr.map(s => s.trim()))].filter(Boolean);
+
+    function setStatus(msg, kind="info"){
+      const colors = {info:"var(--muted)", ok:"var(--ok)", warn:"var(--warn)", err:"#f87171"};
+      elStatus.textContent = msg;
+      elStatus.style.color = colors[kind] || colors.info;
+    }
+
+    async function fetchGrupos() {
+      const res = await fetch(API_URL, { cache: "no-store" });
+      if (!res.ok) throw new Error("Falha ao obter dados da API");
+      const rows = await res.json();
+      const temColunaCodigo = rows.length && ("Código do curso." in rows[0] || "Código do curso" in rows[0]);
+
+      const grupos = new Set();
+      for (const r of rows) {
+        const codigo = r["Código do curso."] ?? r["Código do curso"] ?? "";
+        if (temColunaCodigo && slug(codigo) !== slug(CODIGO_CURSO)) continue;
+        const g = (r[COLUNA_GRUPO] || "").trim();
+        if (g) grupos.add(g);
+      }
+      return Array.from(grupos).sort((a,b)=>a.localeCompare(b,'pt',{sensitivity:"base"}));
+    }
+
+    function parear1a1(lista, meu) {
+      const n = lista.length;
+      if (n < 2) throw new Error("São necessários pelo menos 2 grupos.");
+      const idx = lista.findIndex(g => slug(g) === slug(meu));
+      if (idx === -1) throw new Error("O seu grupo não foi encontrado na lista oficial.");
+      const next = lista[(idx+1) % n];
+      const prev = lista[(idx-1+n) % n];
+      return { dar: next, receber: prev };
+    }
+
+    function renderSingle(ul, val){
+      ul.innerHTML = "";
+      const li = document.createElement("li");
+      li.textContent = val || "—";
+      ul.appendChild(li);
+    }
+
+    async function gerar() {
+      try {
+        const meu = elMeuGrupo.value.trim();
+        if (!meu) { setStatus("Escreva o nome do seu grupo.", "warn"); return; }
+        localStorage.setItem(LS_KEY, meu);
+        setStatus("A sincronizar com a lista…");
+
+        const grupos = await fetchGrupos();
+        const { dar, receber } = parear1a1(grupos, meu);
+        renderSingle(elListaDar, dar);
+        renderSingle(elListaReceber, receber);
+        setStatus(`Pareamento gerado para «${meu}».`, "ok");
+      } catch (e) {
+        console.error(e);
+        setStatus(e.message || "Ocorreu um erro ao gerar pareamento.", "err");
+      }
+    }
+
+    function limpar(){
+      elMeuGrupo.value = "";
+      localStorage.removeItem(LS_KEY);
+      elListaDar.innerHTML = "";
+      elListaReceber.innerHTML = "";
+      setStatus("Limpo. Introduza o nome do grupo e gere novamente.", "info");
+    }
+
+    elBtnGerar.addEventListener("click", gerar);
+    elBtnLimpar.addEventListener("click", limpar);
+
+    // Opcional: si ja tens el nom, intenta generar d'entrada
+    if (elMeuGrupo.value) gerar();
+  </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>LAB Avaliação — Bloco 1</title>
+  <link rel="stylesheet" href="assets/style.css"/>
+  <link rel="stylesheet" href="assets/theme-light.css">
+
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="logo">LAB Avaliação</div>
+<nav>
+  <a href="index.html">Portada</a>
+  <a href="bloco1.html" class="active">Bloco 1</a>
+  <a href="bloco2.html">Bloco 2</a>
+  <a href="bloco3.html">Bloco 3</a>
+  <a href="bloco4.html">Bloco 4</a>
+  <a href="final.html">Final</a>
+</nav>
+    </div>
+  </header>
+  <main class="container">
+    <section class="card">
+      <h1>Bloco 1 — Explorar e observar</h1>
+      <p class="lead">Escreva a sua reflexão. Pode voltar e editar; o conteúdo fica guardado no seu navegador (versão provisória).</p>
+      <div class="row">
+        <div>
+          <label for="reflexao1">Reflexão do Bloco 1</label>
+          <textarea id="reflexao1" rows="10" placeholder="Escreva aqui..."></textarea>
+        </div>
+      </div>
+      <p><button class="btn" id="saveBtn">Guardar</button></p>
+      <div class="status"></div>
+    </section>
+  </main>
+  <footer>© 2025 LAB Avaliação — versão provisória</footer>
+  
+<script>
+function key(k){ return 'lab_avaliacao_' + k; }
+function save(k, v){
+  localStorage.setItem(key(k), JSON.stringify({ v: v, ts: Date.now() }));
+  var st = document.querySelector('.status');
+  if(st){ st.textContent = 'Guardado localmente às ' + new Date().toLocaleTimeString(); }
+}
+function load(k){
+  try{
+    var raw = localStorage.getItem(key(k));
+    if(!raw) return {v:'', ts:null};
+    return JSON.parse(raw);
+  } catch(e){ return {v:'', ts:null}; }
+}
+</script>
+
+  <script>
+    var data = load('bloco1_reflexao');
+    if(data.v){ document.getElementById('reflexao1').value = data.v; }
+    if(data.ts){ var st = document.querySelector('.status'); if(st) st.textContent = 'Última atualização local: ' + new Date(data.ts).toLocaleString(); }
+    document.getElementById('saveBtn').addEventListener('click', function(){
+      var v = document.getElementById('reflexao1').value;
+      save('bloco1_reflexao', v);
+    });
+  </script>
+</body>
+</html>
