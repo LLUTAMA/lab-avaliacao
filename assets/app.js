@@ -5,7 +5,7 @@
 
 /** 1) POSADA LA TEVA URL DEL WEB APP (exec)  **/
 const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbxCJGGeVuaSBW8VSGK_wh4ZEMdJGIg-yL-dzdBu6m6Bs27Aj4fYrX9uKlEgJveQunOe3w/exec";
+ https://script.google.com/macros/s/AKfycbyJR7Oly_floO3FkFcO7MHOPh5FROgyvjIxMMZeAP2QcU8dqEzrjIu2nE64Ly63SB2vpg/exec
 
 /** Utils de localStorage per guardar i recuperar la identitat **/
 const IDENT_KEY = "lab_avaliacao_ident";
