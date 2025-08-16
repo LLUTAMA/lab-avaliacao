@@ -2,72 +2,96 @@
 <html lang="pt-PT">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>LAB Avaliação — Portada</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, initial-scale=1" />
+  <title>LAB Avaliação – Portada</title>
   <link rel="stylesheet" href="assets/style.css">
   <script defer src="assets/app.js"></script>
 </head>
 <body>
-<header class="site">
-  <div class="wrap">
-    <div class="brand">LAB Avaliação</div>
-    <nav>
-      <a href="index.html" class="active">Portada</a>
-      <a href="bloco1.html">Bloco 1</a>
-      <a href="bloco2.html">Bloco 2</a>
-      <a href="bloco3.html">Bloco 3</a>
-      <a href="bloco4.html">Bloco 4</a>
-      <a href="final.html">Final</a>
-    </nav>
-  </div>
-</header>
-
-<main class="container">
-  <!-- A barra de identificação (Email, Nome, Grupo, Código) é inserida automaticamente pelo app.js -->
-  <section class="card hero">
-    <h1>Bem-vindos ao LAB Avaliação</h1>
-    <p class="lead">Laboratório de Formação em Avaliação Educativa Potenciada por IA. Setembro 2025.</p>
-    <div class="notice">
-      <span class="badge">Código do curso</span>
-      LAB Avaliação-2025
+  <header class="site">
+    <div class="wrap">
+      <div class="brand">LAB Avaliação</div>
+      <nav>
+        <a href="index.html" class="active">Portada</a>
+        <a href="bloco1.html">Bloco 1</a>
+        <a href="bloco2.html">Bloco 2</a>
+        <a href="bloco3.html">Bloco 3</a>
+        <a href="bloco4.html">Bloco 4</a>
+        <a href="final.html">Final</a>
+      </nav>
     </div>
-    <p class="small">Use o mesmo e-mail e o mesmo nome de grupo em todos os blocos. As suas respostas serão guardadas numa base de dados para permitir o feedback entre pares.</p>
-    <p>
-      <a class="btn" href="bloco1.html">Começar no Bloco 1</a>
-      <a class="btn secondary" href="bloco3.html">Ir para o Bloco 3</a>
-    </p>
-  </section>
+  </header>
 
-  <section class="card">
-    <h2>Como funciona</h2>
-    <div class="row">
-      <div class="col-6">
-        <h3>1) Identificação</h3>
-        <p>Preencha no topo: <strong>E-mail</strong>, <strong>Nome</strong>, <strong>Nome do grupo</strong> e o <strong>Código do curso</strong> (<em>LAB Avaliação-2025</em>).</p>
-      </div>
-      <div class="col-6">
-        <h3>2) Guardar &amp; Recuperar</h3>
-        <p>Em cada bloco, use os botões <em>Guardar</em> e <em>Recuperar</em> para sincronizar as suas respostas com a base de dados.</p>
-      </div>
-      <div class="col-6">
-        <h3>3) Feedback (Bloco 3)</h3>
-        <p>Crie a sua rúbrica e autoavaliação. O sistema indicará um grupo a quem dar feedback e mostrará o conteúdo desse grupo.</p>
-      </div>
-      <div class="col-6">
-        <h3>4) Ação (Bloco 4)</h3>
-        <p>Defina compromissos, passos e prazos. Pode exportar em .txt ou imprimir.</p>
-      </div>
-    </div>
-  </section>
-</main>
+  <main class="container">
 
-<footer class="wrap">© 2025 LAB Avaliação</footer>
+    <!-- Hero -->
+    <section class="card hero">
+      <h1>Bem-vindos ao LAB Avaliação</h1>
+      <p class="lead">Laboratório de Formação em Avaliação Educativa Potenciada por IA. Setembro 2025.</p>
+      <div class="notice">
+        <span class="badge">Código do curso</span>
+        LAB Avaliação-2025
+      </div>
+    </section>
 
-<script>
-  // Monta a barra de identificação. Nesta página não há formulário de respostas.
-  document.addEventListener('DOMContentLoaded', () => {
-    if (window.LAB && LAB.initBlockPage) LAB.initBlockPage('index');
-  });
-</script>
+    <!-- Formulário -->
+    <section class="card">
+      <h2>Identificação</h2>
+      <form id="form-inscripcio">
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" required>
+
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" required>
+
+        <label for="codigo">Código do curso:</label>
+        <input type="text" id="codigo" value="LAB Avaliação-2025" required>
+
+        <label for="grupo">Nome do grupo:</label>
+        <input type="text" id="grupo" required>
+
+        <label for="membros">Membros do grupo:</label>
+        <input type="text" id="membros" required>
+
+        <button type="submit">Guardar Identificação</button>
+      </form>
+    </section>
+
+    <!-- Como funciona -->
+    <section class="card">
+      <h2>Como funciona</h2>
+      <div class="row">
+        <div class="col-6">
+          <h3>1) Identificação</h3>
+          <p>Preencha no topo: <strong>E-mail</strong>, <strong>Nome</strong>, <strong>Nome do grupo</strong> e o <strong>Código do curso</strong>.</p>
+        </div>
+        <div class="col-6">
+          <h3>2) Guardar & Recuperar</h3>
+          <p>Em cada bloco, use os botões <em>Guardar</em> e <em>Recuperar</em> para sincronizar as suas respostas com a base de dados.</p>
+        </div>
+        <div class="col-6">
+          <h3>3) Feedback (Bloco 3)</h3>
+          <p>Crie a sua rúbrica e autoavaliação. O sistema indicará um grupo a quem dar feedback e mostrará o conteúdo desse grupo.</p>
+        </div>
+        <div class="col-6">
+          <h3>4) Ação (Bloco 4)</h3>
+          <p>Defina compromissos, passos e prazos. Pode exportar em .txt ou imprimir.</p>
+        </div>
+      </div>
+
+      <p class="small">
+        Use o mesmo e-mail e o mesmo nome de grupo em todos os blocos. As suas respostas serão guardadas numa base de dados para permitir feedback entre pares.
+      </p>
+
+      <p>
+        <a class="btn" href="bloco1.html">Começar no Bloco 1</a>
+        <a class="btn secondary" href="bloco3.html">Ir para o Bloco 3</a>
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 LAB Avaliação</p>
+  </footer>
 </body>
 </html>
