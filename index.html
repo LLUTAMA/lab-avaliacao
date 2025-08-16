@@ -2,96 +2,111 @@
 <html lang="pt-PT">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, initial-scale=1" />
-  <title>LAB Avaliação – Portada</title>
-  <link rel="stylesheet" href="assets/style.css">
-  <script defer src="assets/app.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LAB Avaliação — Portada</title>
+  <style>
+    :root{
+      --bg:#f7f9fc;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --primary:#2563eb;
+      --primary-600:#1d4ed8;
+      --border:#e5e7eb;
+      --shadow:0 8px 24px rgba(0,0,0,.06);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+      font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial}
+    a{color:var(--primary);text-decoration:none}
+    /* Header */
+    .site{position:sticky;top:0;background:rgba(255,255,255,.9);backdrop-filter:saturate(160%) blur(8px);
+      border-bottom:1px solid var(--border);z-index:50}
+    .wrap{max-width:1100px;margin:auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{font-weight:800;letter-spacing:.3px}
+    nav a{padding:8px 10px;border-radius:10px}
+    nav a.active, nav a:hover{background:#eef2ff}
+    /* Layout */
+    .container{max-width:1000px;margin:28px auto;padding:0 20px;display:grid;gap:22px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
+    .hero{padding:32px 28px}
+    h1{font-size:clamp(28px,4vw,40px);line-height:1.15;margin:0 0 6px}
+    h2{margin:0 0 10px}
+    .lead{color:var(--muted);margin:0 0 14px}
+    .badge{display:inline-block;background:#e0e7ff;color:var(--primary-600);font-weight:700;font-size:.85rem;padding:6px 10px;border-radius:999px;margin-right:8px}
+    .notice{display:flex;align-items:center;gap:10px;font-weight:600}
+    .row{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    .col-6{grid-column:span 6}
+    @media (max-width:800px){.col-6{grid-column:1/-1}}
+    .pill{display:inline-flex;align-items:center;gap:8px;background:#f1f5f9;border:1px solid var(--border);padding:8px 12px;border-radius:999px;color:#374151}
+    .time{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--primary);color:#fff;font-weight:700;
+      padding:12px 16px;border-radius:12px;border:1px solid var(--primary-600);box-shadow:0 6px 16px rgba(37,99,235,.18);transition:.18s ease;cursor:pointer}
+    .btn:hover{transform:translateY(-1px);box-shadow:0 10px 22px rgba(37,99,235,.22);background:var(--primary-600)}
+    .btn.secondary{background:#f8fafc;color:#0f172a;border:1px solid var(--border);box-shadow:none}
+    .btn.secondary:hover{background:#eef2ff;color:#0f172a}
+    ul{margin:10px 0 0 18px}
+    footer{max-width:1000px;margin:24px auto 40px;padding:0 20px;color:#6b7280}
+  </style>
 </head>
 <body>
-  <header class="site">
-    <div class="wrap">
-      <div class="brand">LAB Avaliação</div>
-      <nav>
-        <a href="index.html" class="active">Portada</a>
-        <a href="bloco1.html">Bloco 1</a>
-        <a href="bloco2.html">Bloco 2</a>
-        <a href="bloco3.html">Bloco 3</a>
-        <a href="bloco4.html">Bloco 4</a>
-        <a href="final.html">Final</a>
-      </nav>
+<header class="site">
+  <div class="wrap">
+    <div class="brand">LAB Avaliação</div>
+    <nav>
+      <a href="index.html" class="active">Portada</a>
+      <a href="bloco1.html">Bloco 1</a>
+      <a href="bloco2.html">Bloco 2</a>
+      <a href="bloco3.html">Bloco 3</a>
+      <a href="bloco4.html">Bloco 4</a>
+      <a href="final.html">Final</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <!-- Hero -->
+  <section class="card hero">
+    <h1>Bem-vindos ao LAB Avaliação</h1>
+    <p class="lead">Laboratório de Formação em Avaliação Educativa Potenciada por IA. Setembro 2025.</p>
+    <div class="notice"><span class="badge">Código do curso</span> LAB Avaliação–2025</div>
+  </section>
+
+  <!-- Como se aprende / Duração -->
+  <section class="card">
+    <h2>Como se aprende neste LAB?</h2>
+    <p>
+      É um <strong>taller prático</strong>: aprender fazendo, refletindo e melhorando em ciclos curtos.
+      Trabalha em <strong>pares</strong> ou <strong>trios</strong>. Escolhe um <strong>nome de grupo</strong> e mantém-no igual em todo o LAB.
+    </p>
+    <div class="row" style="margin-top:6px">
+      <div class="col-6"><div class="pill time"><span><strong>Bloco 1</strong> — Fundamentação e Exploração</span> <span>25’</span></div></div>
+      <div class="col-6"><div class="pill time"><span><strong>Bloco 2</strong> — Design e Experimentação</span> <span>40’</span></div></div>
+      <div class="col-6"><div class="pill time"><span><strong>Bloco 3</strong> — Intercâmbio e Colaboração</span> <span>40’</span></div></div>
+      <div class="col-6"><div class="pill time"><span><strong>Bloco 4</strong> — Transferir – Prática</span> <span>15’</span></div></div>
     </div>
-  </header>
+    <p style="margin-top:14px;color:var(--muted)">
+      Nesta versão, o que escrevem fica guardado no dispositivo. No Bloco 3 e 4 podem <em>Exportar .txt</em>.
+    </p>
+    <p style="margin:14px 0 0">
+      <a class="btn" href="bloco1.html">Começar no Bloco 1</a>
+      <a class="btn secondary" href="bloco3.html">Ir direto ao Bloco 3</a>
+    </p>
+  </section>
 
-  <main class="container">
+  <!-- Expectatives -->
+  <section class="card">
+    <h2>O que esperamos de vocês</h2>
+    <ul>
+      <li><strong>Clareza:</strong> escrever de forma concreta e observável.</li>
+      <li><strong>Evidências:</strong> exemplos reais de sala de aula.</li>
+      <li><strong>Colaboração:</strong> feedback respeitoso e útil.</li>
+      <li><strong>Foco:</strong> cumprir os tempos propostos.</li>
+    </ul>
+  </section>
+</main>
 
-    <!-- Hero -->
-    <section class="card hero">
-      <h1>Bem-vindos ao LAB Avaliação</h1>
-      <p class="lead">Laboratório de Formação em Avaliação Educativa Potenciada por IA. Setembro 2025.</p>
-      <div class="notice">
-        <span class="badge">Código do curso</span>
-        LAB Avaliação-2025
-      </div>
-    </section>
-
-    <!-- Formulário -->
-    <section class="card">
-      <h2>Identificação</h2>
-      <form id="form-inscripcio">
-        <label for="email">E-mail:</label>
-        <input type="email" id="email" required>
-
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" required>
-
-        <label for="codigo">Código do curso:</label>
-        <input type="text" id="codigo" value="LAB Avaliação-2025" required>
-
-        <label for="grupo">Nome do grupo:</label>
-        <input type="text" id="grupo" required>
-
-        <label for="membros">Membros do grupo:</label>
-        <input type="text" id="membros" required>
-
-        <button type="submit">Guardar Identificação</button>
-      </form>
-    </section>
-
-    <!-- Como funciona -->
-    <section class="card">
-      <h2>Como funciona</h2>
-      <div class="row">
-        <div class="col-6">
-          <h3>1) Identificação</h3>
-          <p>Preencha no topo: <strong>E-mail</strong>, <strong>Nome</strong>, <strong>Nome do grupo</strong> e o <strong>Código do curso</strong>.</p>
-        </div>
-        <div class="col-6">
-          <h3>2) Guardar & Recuperar</h3>
-          <p>Em cada bloco, use os botões <em>Guardar</em> e <em>Recuperar</em> para sincronizar as suas respostas com a base de dados.</p>
-        </div>
-        <div class="col-6">
-          <h3>3) Feedback (Bloco 3)</h3>
-          <p>Crie a sua rúbrica e autoavaliação. O sistema indicará um grupo a quem dar feedback e mostrará o conteúdo desse grupo.</p>
-        </div>
-        <div class="col-6">
-          <h3>4) Ação (Bloco 4)</h3>
-          <p>Defina compromissos, passos e prazos. Pode exportar em .txt ou imprimir.</p>
-        </div>
-      </div>
-
-      <p class="small">
-        Use o mesmo e-mail e o mesmo nome de grupo em todos os blocos. As suas respostas serão guardadas numa base de dados para permitir feedback entre pares.
-      </p>
-
-      <p>
-        <a class="btn" href="bloco1.html">Começar no Bloco 1</a>
-        <a class="btn secondary" href="bloco3.html">Ir para o Bloco 3</a>
-      </p>
-    </section>
-  </main>
-
-  <footer>
-    <p>© 2025 LAB Avaliação</p>
-  </footer>
+<footer>© 2025 LAB Avaliação</footer>
 </body>
 </html>
