@@ -3,89 +3,71 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>LAB Avaliação – Portada</title>
-  <meta name="description" content="Laboratório de Formação em Avaliação Educativa Potenciada por IA. REIMAGINE EDUCATION. Setembro 2025.">
+  <title>LAB Avaliação — Portada</title>
   <link rel="stylesheet" href="assets/style.css">
-
-
-
-  
+  <script defer src="assets/app.js"></script>
 </head>
 <body>
-  <header class="wrap">
+<header class="site">
+  <div class="wrap">
     <div class="brand">LAB Avaliação</div>
-<nav>
-  <a href="index.html" class="active">Portada</a>
-  <a href="bloco1.html">Bloco 1</a>
-  <a href="bloco2.html">Bloco 2</a>
-  <a href="bloco3.html">Bloco 3</a>
-  <a href="bloco4.html">Bloco 4</a>
-  <a href="final.html">Final</a>
-</nav>
-  </header>
+    <nav>
+      <a href="index.html" class="active">Portada</a>
+      <a href="bloco1.html">Bloco 1</a>
+      <a href="bloco2.html">Bloco 2</a>
+      <a href="bloco3.html">Bloco 3</a>
+      <a href="bloco4.html">Bloco 4</a>
+      <a href="final.html">Final</a>
+    </nav>
+  </div>
+</header>
 
-  <main>
-    <section class="hero wrap">
-      <div>
-        <span class="badge">REIMAGINE EDUCATION — Setembro 2025</span>
-        <h1>Laboratório de Formação em Avaliação Educativa<br/>Potenciada por IA</h1>
-        <p>
-          Um LAB prático para docentes do ensino <b>Primário, Secundário e Profissional</b>, focado em
-          <b>estratégias de avaliação</b>, <b>rubricas</b>, <b>autoavaliação</b> e <b>feedback entre pares</b> com o apoio de ferramentas de IA.
-        </p>
-        <div class="cta">
-          <!-- Substitui o link do Forms se tiveres um novo -->
-          <a class="btn" href="https://forms.gle/6xL4aq1236qaYxDQ7" target="_blank" rel="noopener">
-            ✍️ Inscrição no LAB
-          </a>
-          <a class="btn secondary" href="bloco1.html">➡️ Entrar no Bloco 1</a>
-          <a class="btn secondary" href="bloco2.html">➡️ Bloco 2</a>
-          <a class="btn secondary" href="bloco3.html">➡️ Bloco 3</a>
-        </div>
-        <div class="spacer"></div>
-        <div class="tag">Código do curso: <b>LAB Avaliação-2025</b> (escreve exatamente assim na inscrição)</div>
-      </div>
-    </section>
+<main class="container">
+  <!-- A barra de identificação (Email, Nome, Grupo, Código) é inserida automaticamente pelo app.js -->
+  <section class="card hero">
+    <h1>Bem-vindos ao LAB Avaliação</h1>
+    <p class="lead">Laboratório de Formação em Avaliação Educativa Potenciada por IA. Setembro 2025.</p>
+    <div class="notice">
+      <span class="badge">Código do curso</span>
+      LAB Avaliação-2025
+    </div>
+    <p class="small">Use o mesmo e-mail e o mesmo nome de grupo em todos os blocos. As suas respostas serão guardadas numa base de dados para permitir o feedback entre pares.</p>
+    <p>
+      <a class="btn" href="bloco1.html">Começar no Bloco 1</a>
+      <a class="btn secondary" href="bloco3.html">Ir para o Bloco 3</a>
+    </p>
+  </section>
 
-    <section class="wrap" style="margin-top:6px">
-      <div class="grid3">
-        <div class="panel">
-          <h2>Bem-vindo(a) 👋</h2>
-          <p class="muted">
-            Este LAB está organizado em passos curtos e práticos. Em cada bloco, encontrará perguntas de reflexão,
-            espaços para escrever e guardar ideias, e momentos de colaboração.
-          </p>
-        </div>
-        <div class="panel">
-          <h2>Como funciona</h2>
-          <ul class="list muted">
-            <li>Inscreva-se usando o <b>código do curso</b> acima.</li>
-            <li>Forme um <b>grupo de 2–3 docentes</b> e dê um <b>nome ao grupo</b>.</li>
-            <li>No <b>Bloco 3</b>, o sistema atribui automaticamente o <b>feedback 1↔1</b>.</li>
-          </ul>
-        </div>
-        <div class="panel">
-          <h2>O que vai aprender</h2>
-          <ul class="list muted">
-            <li>Desenho de tarefas e rubricas</li>
-            <li>Autoavaliação e metacognição</li>
-            <li>Feedback claro, acionável e ético</li>
-            <li>Como a IA pode apoiar cada etapa</li>
-          </ul>
-        </div>
+  <section class="card">
+    <h2>Como funciona</h2>
+    <div class="row">
+      <div class="col-6">
+        <h3>1) Identificação</h3>
+        <p>Preencha no topo: <strong>E-mail</strong>, <strong>Nome</strong>, <strong>Nome do grupo</strong> e o <strong>Código do curso</strong> (<em>LAB Avaliação-2025</em>).</p>
       </div>
-      <div class="panel" style="margin-top:16px">
-        <h2>Formação de grupos</h2>
-        <p class="muted">
-          Logo no início, organize-se em pares ou trios e registe o <b>nome do grupo</b> na inscrição.
-          Use sempre a mesma designação para que o sistema reconheça corretamente as suas contribuições.
-        </p>
+      <div class="col-6">
+        <h3>2) Guardar &amp; Recuperar</h3>
+        <p>Em cada bloco, use os botões <em>Guardar</em> e <em>Recuperar</em> para sincronizar as suas respostas com a base de dados.</p>
       </div>
-    </section>
-  </main>
+      <div class="col-6">
+        <h3>3) Feedback (Bloco 3)</h3>
+        <p>Crie a sua rúbrica e autoavaliação. O sistema indicará um grupo a quem dar feedback e mostrará o conteúdo desse grupo.</p>
+      </div>
+      <div class="col-6">
+        <h3>4) Ação (Bloco 4)</h3>
+        <p>Defina compromissos, passos e prazos. Pode exportar em .txt ou imprimir.</p>
+      </div>
+    </div>
+  </section>
+</main>
 
-  <footer class="wrap">
-    <div>© 2025 LAB Avaliação — Plataforma educativa para docentes</div>
-  </footer>
+<footer class="wrap">© 2025 LAB Avaliação</footer>
+
+<script>
+  // Monta a barra de identificação. Nesta página não há formulário de respostas.
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.LAB && LAB.initBlockPage) LAB.initBlockPage('index');
+  });
+</script>
 </body>
 </html>
